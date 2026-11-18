@@ -17,6 +17,7 @@ codetest/
     │   ├── base.css              # រចនាបថមូលដ្ឋាន Typography និង Performance CSS
     │   ├── layout.css            # រចនាសម្ព័ន្ធ Header, Navbar, Hero, Sections, Footer
     │   ├── components.css        # ប៊ូតុង កាត បណ្ណសារ ប្រអប់ Upload និង Lightbox
+    │   ├── folders.css           # រចនាបថថតសាស្រ្តាស្លឹករឹត-ក្រាំង និងផ្ទាំងបើកមើលក្នុងថត
     │   ├── documents.css         # រចនាបថប្រព័ន្ធឯកសារប្រវត្តិ និងផ្ទាំងអាន
     │   └── animations.css        # ចលនា Host Color ពេលចុច Menu និង Scroll Reveal
     ├── data/

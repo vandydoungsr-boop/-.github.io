@@ -82,10 +82,9 @@ p {
   transition: color var(--transition-theme);
 }
 
-/* សម្រាលបន្ទុក Browser សម្រាប់ផ្នែកដែលនៅខាងក្រោម (Performance Optimization) */
+/* សម្រាលបន្ទុក Layout សម្រាប់ផ្នែកដែលនៅខាងក្រោម ដោយមិនប៉ះពាល់ដល់ IntersectionObserver */
 .lazy-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 640px;
+  contain: layout style;
 }
 
 /* កុងតឺន័រស្តង់ដារ */

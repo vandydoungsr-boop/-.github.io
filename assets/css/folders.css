@@ -1,0 +1,447 @@
+/* ==========================================================================
+   folders.css — រចនាបថថតសាស្រ្តាស្លឹករឹត-ក្រាំង (Manuscript Folder Strips)
+   និងផ្ទាំងបើកមើលឯកសារទាំងអស់ក្នុងថតយ៉ាងរលូន (Ultra-Smooth 60fps)
+   ========================================================================== */
+
+/* ផ្នែកថតសាស្រ្តាស្លឹករឹត – ក្រាំង (ដូចទម្រង់គម្ពីរស្លឹករឹតបុរាណ) */
+.folder-showcase {
+  margin-bottom: 34px;
+}
+
+.folder-showcase-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.folder-showcase-title {
+  font-family: var(--font-serif);
+  font-size: 1.28rem;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 28px;
+}
+
+/* កាតថតសាស្រ្តាស្លឹករឹត (សន្លឹកឈើ/ស្លឹករឹតបុរាណមានអក្សរចំណងជើងនៅកណ្តាល) */
+.manuscript-folder-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.26s var(--ease-smooth);
+}
+
+.manuscript-folder-card:hover,
+.manuscript-folder-card:focus-visible {
+  transform: translateY(-4px);
+}
+
+.manuscript-plank {
+  position: relative;
+  min-height: 92px;
+  border-radius: 10px;
+  padding: 18px 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  /* ផ្ទៃឈើសាស្រ្តាបុរាណស្រទន់ មានសរសៃឈើធម្មជាតិ */
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(120, 74, 24, 0.05) 0px,
+      rgba(120, 74, 24, 0.05) 2px,
+      transparent 2px,
+      transparent 7px
+    ),
+    linear-gradient(180deg, #e5c38b 0%, #d8ac67 48%, #c9964c 100%);
+  border: 1px solid rgba(118, 76, 26, 0.38);
+  box-shadow:
+    inset 0 2px 3px rgba(255, 246, 224, 0.55),
+    inset 0 -3px 6px rgba(92, 54, 15, 0.28),
+    0 8px 20px rgba(23, 36, 33, 0.14);
+  transition: box-shadow 0.26s var(--ease-smooth), filter 0.26s ease;
+}
+
+[data-theme='dark'] .manuscript-plank {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(66, 39, 12, 0.1) 0px,
+      rgba(66, 39, 12, 0.1) 2px,
+      transparent 2px,
+      transparent 7px
+    ),
+    linear-gradient(180deg, #caa368 0%, #b78a4a 50%, #9f7235 100%);
+  border-color: rgba(235, 198, 134, 0.35);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 244, 214, 0.35),
+    inset 0 -3px 8px rgba(42, 23, 6, 0.45),
+    0 10px 26px rgba(0, 0, 0, 0.42);
+}
+
+.manuscript-folder-card:hover .manuscript-plank {
+  box-shadow:
+    inset 0 2px 3px rgba(255, 246, 224, 0.65),
+    inset 0 -3px 6px rgba(92, 54, 15, 0.3),
+    0 14px 30px rgba(30, 115, 102, 0.22);
+  filter: brightness(1.03);
+}
+
+/* រន្ធដោតខ្សែសាស្រ្តាសងខាងតូចៗឲ្យដូចសាស្រ្តាពិត */
+.manuscript-plank::before,
+.manuscript-plank::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(68, 41, 14, 0.35);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.manuscript-plank::before {
+  left: 16px;
+}
+
+.manuscript-plank::after {
+  right: 16px;
+}
+
+/* ករណីជ្រើសប្រើរូបភាពដំបូងធ្វើជាគម្របថត */
+.manuscript-plank.has-cover-img {
+  background: #141c1a;
+  min-height: 118px;
+}
+
+.manuscript-plank-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.48;
+  transition: transform 0.45s var(--ease-smooth), opacity 0.3s ease;
+}
+
+.manuscript-folder-card:hover .manuscript-plank-bg {
+  transform: scale(1.04);
+  opacity: 0.58;
+}
+
+.manuscript-plank-title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-serif);
+  font-size: clamp(1.02rem, 1.55vw, 1.24rem);
+  font-weight: 700;
+  color: #211408;
+  text-shadow: 0 1px 0 rgba(255, 245, 220, 0.48);
+  padding: 0 14px;
+  line-height: 1.45;
+}
+
+.manuscript-plank.has-cover-img .manuscript-plank-title {
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.72);
+}
+
+.manuscript-plank-count {
+  position: absolute;
+  bottom: 7px;
+  right: 12px;
+  z-index: 1;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: rgba(33, 20, 8, 0.72);
+  color: #fff8ea;
+  backdrop-filter: blur(4px);
+}
+
+.manuscript-folder-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.manuscript-folder-caption {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.manuscript-folder-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ប៊ូតុងជ្រើស File ឬ Folder ក្នុង Dropzone */
+.upload-picker-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.picker-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 0.86rem;
+  font-weight: 600;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.picker-chip-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.picker-chip-btn.is-accent {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+.picker-chip-btn.is-accent:hover {
+  filter: brightness(1.06);
+  color: #ffffff;
+}
+
+/* រូបភាពមើលជាមុនច្រើនសន្លឹកក្នុង Dropzone */
+.preview-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  background: var(--bg-section-alt);
+  border-radius: 12px;
+  max-height: 196px;
+  overflow-y: auto;
+}
+
+.preview-thumb-cell {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-light);
+}
+
+.preview-thumb-cell img,
+.preview-thumb-cell video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-thumb-index {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(10, 16, 15, 0.78);
+  color: #ffffff;
+}
+
+/* ផ្ទាំងបើកមើលរូបភាពទាំងអស់ក្នុង Folder (Folder Viewer Modal) */
+.folder-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1480;
+  background: var(--bg-lightbox);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease, visibility 0.22s ease;
+}
+
+.folder-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.folder-modal-dialog {
+  width: 100%;
+  max-width: 1080px;
+  max-height: 92vh;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(14px) scale(0.985);
+  transition: transform 0.26s var(--ease-smooth);
+}
+
+.folder-modal.is-open .folder-modal-dialog {
+  transform: translateY(0) scale(1);
+}
+
+.folder-modal-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 24px;
+  background: var(--bg-section-alt);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.folder-modal-title-wrap h3 {
+  font-size: 1.24rem;
+  margin-bottom: 2px;
+}
+
+.folder-modal-title-wrap p {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+
+.folder-modal-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.folder-modal-body {
+  padding: 22px 24px 26px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.folder-pages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.folder-page-card {
+  background: var(--bg-section-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-smooth), border-color 0.2s ease;
+}
+
+.folder-page-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-primary);
+}
+
+.folder-page-thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--bg-dark);
+  overflow: hidden;
+}
+
+.folder-page-thumb img,
+.folder-page-thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.folder-page-label {
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+
+.folder-page-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ប៊ូតុងទំព័រមុន/ក្រោយ ក្នុងផ្ទាំង Lightbox */
+.lightbox-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lightbox-nav-btn {
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-medium);
+  background: var(--bg-section-alt);
+  color: var(--text-primary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.lightbox-nav-btn:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.lightbox-nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 780px) {
+  .folder-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .folder-pages-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .folder-modal-header,
+  .folder-modal-body {
+    padding: 14px 16px;
+  }
+}
+

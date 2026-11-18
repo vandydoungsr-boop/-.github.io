@@ -66,8 +66,25 @@
       return;
     }
 
-    revealTargets.forEach((el) => revealObserver.observe(el));
-    lazyImages.forEach((img) => mediaLazyObserver.observe(img));
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+
+    revealTargets.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < vh * 1.05 && rect.bottom > 0) {
+        el.classList.add('is-revealed');
+      } else {
+        revealObserver.observe(el);
+      }
+    });
+
+    lazyImages.forEach((img) => {
+      const rect = img.getBoundingClientRect();
+      if (rect.top < vh + 140 && rect.bottom > -140) {
+        loadLazyImage(img);
+      } else {
+        mediaLazyObserver.observe(img);
+      }
+    });
   }
 
   function initScrollIndicators() {

@@ -1,0 +1,142 @@
+/* ==========================================================================
+   variables.css — ប្រព័ន្ធពណ៌កម្រិតសកល ត្រជាក់ភ្នែក (ម៉ូដថ្ងៃ & ម៉ូដយប់ការពារភ្នែក)
+   ========================================================================== */
+
+/* ពុម្ពអក្សរសិលាចារឹកសម័យអង្គរ NokorReach Angkor (ស្នាដៃ Nouv Samnang / AKbalthom) */
+@font-face {
+  font-family: 'NokorReach Angkor 1';
+  src: url('../fonts/NokorReach-Angkor-1.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NokorReach Angkor 2 Plus';
+  src: url('../fonts/NokorReach-Angkor-2-Plus.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+   color-scheme: light;
+
+   /* ------------------------------------------------------------------------
+     ម៉ូដថ្ងៃ (Day Mode — ត្រជាក់ភ្នែក ស្រទន់ គ្មានពន្លឺចាំងខ្លាំង)
+     ------------------------------------------------------------------------ */
+   --bg-page: #f5f8f7;
+   --bg-section-alt: #ecf2f0;
+   --bg-card: #fcfefd;
+   --bg-elevated: rgba(245, 248, 247, 0.86);
+   --bg-nav-track: rgba(203, 218, 213, 0.42);
+   --bg-input: #ffffff;
+   --bg-dropzone: #f1f6f4;
+   --bg-media-frame: #dce6e2;
+   --bg-dark: #101b19;
+   --bg-badge-overlay: rgba(16, 27, 25, 0.76);
+   --bg-lightbox: rgba(11, 18, 17, 0.84);
+   --bg-empty: rgba(252, 254, 253, 0.75);
+
+   /* ពណ៌អក្សរ (កម្រិត Contrast ស្តង់ដារ WCAG AAA ងាយអានមិនឈឺភ្នែក) */
+   --text-primary: #172421;
+   --text-secondary: #485b56;
+   --text-muted: #6c807a;
+   --text-on-dark: #edf4f1;
+   --text-on-accent: #ffffff;
+
+   /* ពណ៌ចម្បងកម្រិតសកល (Serene Angkor Jade + Muted Heritage Gold) */
+   --accent-primary: #1e7366;
+   --accent-primary-deep: #15564c;
+   --accent-primary-soft: rgba(30, 115, 102, 0.12);
+   --accent-gold: #b58837;
+   --accent-gold-light: #d7b269;
+   --accent-gold-soft: rgba(181, 136, 55, 0.14);
+   --accent-crimson: #a83c3c;
+   --accent-crimson-soft: rgba(168, 60, 60, 0.11);
+   --accent-palm: #1e7366;
+
+   /* ពណ៌ផ្ទាំងលម្អ Hero & ផ្ទៃខាងក្រោយ */
+   --hero-orb-1: rgba(30, 115, 102, 0.13);
+   --hero-orb-2: rgba(181, 136, 55, 0.11);
+   --frame-border: #ffffff;
+
+   /* Host Color លំនាំដើម (ផ្លាស់ប្តូរដោយស្វ័យប្រវត្តិតាម Menu ដែលបានចុច) */
+   --host-color: #1e7366;
+   --host-color-soft: rgba(30, 115, 102, 0.22);
+   --host-color-glow: rgba(30, 115, 102, 0.44);
+   --host-origin-x: 50%;
+   --host-origin-y: 36px;
+
+   /* បន្ទាត់ស៊ុម និងស្រមោលស្រទន់ */
+   --border-light: #dbe5e1;
+   --border-medium: #c1d1cb;
+   --shadow-sm: 0 4px 16px rgba(23, 36, 33, 0.05);
+   --shadow-md: 0 12px 32px rgba(23, 36, 33, 0.08);
+   --shadow-lg: 0 24px 58px rgba(23, 36, 33, 0.13);
+
+   /* ពុម្ពអក្សរភាសាខ្មែរ (អក្សរសិលាចារឹកសម័យអង្គរ NokorReach Angkor 1 សម្រាប់ចំណងជើងដំបូង + អក្សរច្បាស់សម្រាប់មាតិកា) */
+   --font-inscription: 'NokorReach Angkor 1', 'NokorReach Angkor 2 Plus', 'Noto Serif Khmer', serif;
+   --font-sans: 'Kantumruy Pro', 'Khmer OS Siemreap', system-ui, -apple-system, sans-serif;
+   --font-serif: 'Noto Serif Khmer', 'Khmer OS Siemreap', Georgia, serif;
+
+   /* ទំហំ និងគម្លាត */
+   --container-max: 1180px;
+   --header-height: 76px;
+   --radius-sm: 10px;
+   --radius-md: 16px;
+   --radius-lg: 24px;
+   --radius-pill: 999px;
+
+   /* ល្បឿនចលនា */
+   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+   --transition-fast: 0.22s var(--ease-smooth);
+   --transition-base: 0.4s var(--ease-smooth);
+   --transition-theme: 0.35s ease;
+}
+
+/* --------------------------------------------------------------------------
+   ម៉ូដយប់ (Night Mode — ការពារភ្នែក កាត់បន្ថយពន្លឺពណ៌ខៀវ និងពន្លឺចាំង)
+   -------------------------------------------------------------------------- */
+[data-theme='dark'] {
+   color-scheme: dark;
+
+   --bg-page: #0d1413;
+   --bg-section-alt: #121c1a;
+   --bg-card: #172321;
+   --bg-elevated: rgba(13, 20, 19, 0.86);
+   --bg-nav-track: rgba(31, 47, 44, 0.72);
+   --bg-input: #111b19;
+   --bg-dropzone: #121d1b;
+   --bg-media-frame: #1c2a27;
+   --bg-dark: #080e0d;
+   --bg-badge-overlay: rgba(9, 15, 14, 0.82);
+   --bg-lightbox: rgba(5, 9, 8, 0.9);
+   --bg-empty: rgba(23, 35, 33, 0.75);
+
+   --text-primary: #e6f0ec;
+   --text-secondary: #a7bbb4;
+   --text-muted: #7d948c;
+   --text-on-dark: #e6f0ec;
+   --text-on-accent: #091513;
+
+   --accent-primary: #45b3a0;
+   --accent-primary-deep: #2c8f7f;
+   --accent-primary-soft: rgba(69, 179, 160, 0.16);
+   --accent-gold: #dab466;
+   --accent-gold-light: #ecd08f;
+   --accent-gold-soft: rgba(218, 180, 102, 0.16);
+   --accent-crimson: #e07272;
+   --accent-crimson-soft: rgba(224, 114, 114, 0.16);
+   --accent-palm: #45b3a0;
+
+   --hero-orb-1: rgba(69, 179, 160, 0.14);
+   --hero-orb-2: rgba(218, 180, 102, 0.1);
+   --frame-border: rgba(188, 220, 210, 0.16);
+
+   --border-light: rgba(184, 216, 206, 0.11);
+   --border-medium: rgba(184, 216, 206, 0.22);
+   --shadow-sm: 0 4px 18px rgba(0, 0, 0, 0.28);
+   --shadow-md: 0 14px 36px rgba(0, 0, 0, 0.4);
+   --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.54);
+}

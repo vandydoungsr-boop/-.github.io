@@ -1,0 +1,116 @@
+/* ==========================================================================
+   animations.css — ចលនា Host Color Menu និង Scroll-Triggered Reveal
+   ========================================================================== */
+
+/* 1) ចលនា Host Color លោតមួយដងនៅផ្ទៃខាងក្រោយពេលចុច Menu */
+@keyframes hostColorBackdropFlash {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  28% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes headerHostSweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-18%) scaleX(0.92);
+  }
+  30% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(18%) scaleX(1.06);
+  }
+}
+
+@keyframes pillHostPop {
+  0% {
+    filter: brightness(1);
+  }
+  40% {
+    filter: brightness(1.18);
+    box-shadow: 0 0 0 10px var(--host-color-soft), 0 10px 26px var(--host-color-glow);
+  }
+  100% {
+    filter: brightness(1);
+    box-shadow: 0 6px 20px var(--host-color-glow);
+  }
+}
+
+@keyframes menuItemHostBurst {
+  0% {
+    opacity: 0.65;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.42);
+  }
+}
+
+/* 2) ចលនាអូសដល់ចាំលោតផុសឡើង (Scroll-Triggered Reveal)
+      ធាតុខាងក្រោមមិនបង្ហាញមុនទេ លុះត្រាតែអូសមកដល់ទើបលោតផុសឡើងយ៉ាងរលូន */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(34px) scale(0.985);
+  transition:
+    opacity 0.68s var(--ease-smooth),
+    transform 0.68s var(--ease-smooth);
+  will-change: opacity, transform;
+}
+
+.reveal-item.reveal-left {
+  transform: translateX(-32px);
+}
+
+.reveal-item.reveal-right {
+  transform: translateX(32px);
+}
+
+.reveal-item.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  will-change: auto;
+}
+
+/* ពន្យារពេលបន្តិចតាមលំដាប់កាត (Stagger Delay) */
+.reveal-delay-1 {
+  transition-delay: 0.08s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.16s;
+}
+
+.reveal-delay-3 {
+  transition-delay: 0.24s;
+}
+
+.reveal-delay-4 {
+  transition-delay: 0.32s;
+}
+
+/* គោរពការកំណត់ Reduced Motion របស់អ្នកប្រើប្រាស់ */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .host-color-backdrop.is-flashing,
+  .header-host-wave.is-flashing,
+  .nav-host-pill.is-popping {
+    animation: none;
+  }
+}
+

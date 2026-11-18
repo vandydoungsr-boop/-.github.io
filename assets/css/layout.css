@@ -1,0 +1,639 @@
+/* ==========================================================================
+   layout.css — រចនាសម្ព័ន្ធ Header, Navbar, Day/Night Switch, Hero និង Footer
+   ========================================================================== */
+
+/* ស្រទាប់ពណ៌ Host Color នៅផ្នែកខាងក្រោយពេលចុច Menu */
+.host-color-backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 950;
+  opacity: 0;
+  background: radial-gradient(circle at var(--host-origin-x) var(--host-origin-y),
+      var(--host-color-glow) 0%,
+      var(--host-color-soft) 28%,
+      transparent 68%);
+  will-change: transform, opacity;
+}
+
+.host-color-backdrop.is-flashing {
+  animation: hostColorBackdropFlash 0.9s var(--ease-smooth) forwards;
+}
+
+/* Header & Navigation Bar */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--header-height);
+  background: var(--bg-elevated);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-light);
+  transition:
+    background-color var(--transition-theme),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-theme);
+  overflow: visible;
+}
+
+.site-header.is-scrolled {
+  box-shadow: var(--shadow-sm);
+}
+
+/* ស្រទាប់ពន្លឺ Host Color ខាងក្រោយរបារ Header ផ្ទាល់ */
+.header-host-wave {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  background: linear-gradient(105deg,
+      transparent 0%,
+      var(--host-color-soft) 35%,
+      var(--host-color-glow) 50%,
+      var(--host-color-soft) 65%,
+      transparent 100%);
+}
+
+.header-host-wave.is-flashing {
+  animation: headerHostSweep 0.8s var(--ease-smooth) forwards;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ឡូហ្គោម៉ាកសញ្ញា */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-deep));
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 18px var(--accent-primary-soft);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.brand-title {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.brand-sub {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ប៊ូតុងប្តូរម៉ូដថ្ងៃ និងម៉ូដយប់ការពារភ្នែក (Day/Night Toggle) */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 0.84rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: scale(0.96);
+}
+
+.theme-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--accent-gold);
+  transition: transform 0.45s var(--ease-smooth), color 0.3s ease;
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+  transform: rotate(18deg);
+}
+
+.theme-toggle .icon-moon {
+  display: none;
+}
+
+[data-theme='dark'] .theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme='dark'] .theme-toggle .icon-moon {
+  display: block;
+  color: var(--accent-primary);
+}
+
+/* ម៉ឺនុយចម្បង (Navigation Menu) */
+.main-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  padding: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-nav-track);
+  border: 1px solid var(--border-light);
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
+}
+
+/* ស៊ុមពណ៌ Host Color រំកិលនៅពីក្រោយម៉ឺនុយដែលបានជ្រើសរើស */
+.nav-host-pill {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  height: calc(100% - 10px);
+  width: 0;
+  border-radius: var(--radius-pill);
+  background: var(--host-color);
+  box-shadow: 0 6px 20px var(--host-color-glow);
+  transition:
+    transform 0.42s var(--ease-smooth),
+    width 0.42s var(--ease-smooth),
+    background-color 0.35s ease,
+    box-shadow 0.35s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.nav-host-pill.is-popping {
+  animation: pillHostPop 0.55s var(--ease-smooth);
+}
+
+.nav-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: color 0.25s ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.nav-link:hover {
+  color: var(--host-color);
+}
+
+.nav-link.is-active {
+  color: #ffffff;
+}
+
+/* ចលនារលក Host Color ផ្ទុះមួយដងនៅខាងក្រោយប៊ូតុង Menu ដែលចុច */
+.nav-link .menu-click-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--host-color);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.nav-link.is-host-clicked .menu-click-ring {
+  animation: menuItemHostBurst 0.65s var(--ease-smooth) forwards;
+}
+
+/* ប៊ូតុងម៉ឺនុយទូរស័ព្ទ (Mobile Menu Button) */
+.mobile-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  align-items: center;
+  justify-content: center;
+}
+
+/* ផ្នែក Hero ខាងលើ (បង្ហាញភ្លាមៗសម្រាប់ First Paint លឿន) */
+.hero-section {
+  position: relative;
+  padding: 68px 0 88px;
+  overflow: hidden;
+}
+
+.hero-section::before,
+.hero-section::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-section::before {
+  top: -130px;
+  right: -110px;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, var(--hero-orb-1), transparent 70%);
+}
+
+.hero-section::after {
+  bottom: -140px;
+  left: -120px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, var(--hero-orb-2), transparent 70%);
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 52px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 15px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-primary-soft);
+  color: var(--accent-primary);
+  border: 1px solid var(--border-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+/* ចំណងជើងដំបូងគេនៃវេបសាយ៖ ពុម្ពអក្សរសិលាចារឹកសម័យអង្គរ NokorReach Angkor 1 */
+.hero-title {
+  font-family: var(--font-inscription);
+  font-size: clamp(2.05rem, 3.85vw, 3.15rem);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1.72;
+  margin-bottom: 22px;
+  letter-spacing: 0.015em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] .hero-title {
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.45);
+}
+
+.hero-title .hero-highlight {
+  color: var(--accent-primary);
+  text-shadow: 0 2px 20px var(--accent-primary-soft);
+}
+
+.hero-title .nowrap {
+  white-space: nowrap;
+}
+
+  .hero-desc {
+    font-size: 1.03rem;
+    max-width: 54ch;
+    margin-bottom: 28px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 34px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .stat-item strong {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 1.32rem;
+    color: var(--text-primary);
+  }
+
+  .stat-item span {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+  }
+
+  .hero-visual {
+    position: relative;
+  }
+
+  .hero-frame {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 5px solid var(--frame-border);
+    background: var(--bg-media-frame);
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-caption-card {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: var(--bg-badge-overlay);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-on-dark);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .hero-caption-card p {
+    color: rgba(237, 244, 241, 0.86);
+    font-size: 0.85rem;
+  }
+
+  /* ផ្នែកមាតិកាស្តង់ដារ (Sections) */
+  .section {
+    padding: 88px 0;
+    scroll-margin-top: calc(var(--header-height) + 12px);
+    transition: background-color var(--transition-theme), border-color var(--transition-theme);
+  }
+
+  .section-alt {
+    background-color: var(--bg-section-alt);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .section-header {
+    max-width: 680px;
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+
+  .section-kicker {
+    display: inline-block;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+    font-weight: 700;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+
+  .section-subtitle {
+    font-size: 0.98rem;
+  }
+
+  /* ក្រឡាប្លង់ (Grid Layouts) */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    align-items: center;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  /* Footer */
+  .site-footer {
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+    padding: 56px 0 32px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(237, 244, 241, 0.12);
+  }
+
+  .site-footer h3,
+  .site-footer h4 {
+    color: #f4faf7;
+    margin-bottom: 12px;
+  }
+
+  .site-footer p,
+  .site-footer li {
+    color: rgba(230, 240, 236, 0.76);
+    font-size: 0.92rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-links a:hover {
+    color: var(--accent-gold-light);
+  }
+
+  .footer-bottom {
+    padding-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: rgba(230, 240, 236, 0.62);
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1180px) {
+    .nav-link {
+      padding: 8px 10px;
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 1040px) {
+    .mobile-toggle {
+      display: inline-flex;
+    }
+
+    .main-nav {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      padding: 16px;
+      background: var(--bg-elevated);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-16px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    }
+
+    .main-nav.is-open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-list {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      border-radius: var(--radius-md);
+      padding: 8px;
+    }
+
+    .nav-host-pill {
+      display: none;
+    }
+
+    .nav-link {
+      justify-content: center;
+      padding: 12px 16px;
+    }
+
+    .nav-link.is-active {
+      background: var(--host-color);
+      box-shadow: 0 6px 18px var(--host-color-glow);
+    }
+  }
+
+  @media (max-width: 980px) {
+
+    .hero-grid,
+    .grid-2 {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .section {
+      padding: 64px 0;
+    }
+
+    .grid-3,
+    .grid-4 {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-stats {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .theme-toggle-label {
+      display: none;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      padding: 0;
+      justify-content: center;
+    }
+  }

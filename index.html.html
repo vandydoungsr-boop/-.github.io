@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f8f7" />
+  <meta name="description"
+    content="វេបសាយបណ្ណសារសាស្រ្តាស្លឹករឹតខ្មែរ — ស្វែងយល់ពីប្រវត្តិ សិល្បៈចារស្លឹករឹត និងចូលរួមបញ្ចូលរូបភាព ឬវីឌីអូដើម្បីថែរក្សាមរតកបុរាណ" />
+  <title>សាស្រ្តាស្លឹករឹត | បណ្ណសារមរតកអក្សរសិល្ប៍បុរាណខ្មែរ</title>
+
+  <!-- ការពារពន្លឺភ្លឹបភ្លែត (No Flash) ពេលបើកក្នុងម៉ូដយប់ -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('sastra-theme');
+        var prefersDark =
+          window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) { }
+    })();
+  </script>
+
+  <!-- ពុម្ពអក្សរភាសាខ្មែរ៖ NokorReach Angkor 1 (ផ្ទុកក្នុង assets/fonts/) + Noto Serif Khmer និង Kantumruy Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&family=Noto+Serif+Khmer:wght@600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- ឯកសារ CSS រៀបចំតាមហេដ្ឋារចនាសម្ព័ន្ធច្បាស់លាស់ -->
+  <link rel="stylesheet" href="assets/css/variables.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/layout.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/documents.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
+</head>
+
+<body>
+  <!-- របារបង្ហាញកម្រិតអូសទំព័រ -->
+  <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ស្រទាប់ពណ៌ Host Color លោតមួយដងនៅផ្នែកខាងក្រោយពេលចុចលើ Menu -->
+  <div id="host-color-backdrop" class="host-color-backdrop" aria-hidden="true"></div>
+
+  <!-- ក្បាលទំព័រ និងម៉ឺនុយ (Header & Navigation) -->
+  <header id="site-header" class="site-header">
+    <div id="header-host-wave" class="header-host-wave" aria-hidden="true"></div>
+
+    <div class="container header-inner">
+      <a href="#home" class="brand" aria-label="ទំព័រដើម សាស្រ្តាស្លឹករឹត">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 7c4-2 12-2 16 0v10c-4-2-12-2-16 0V7z"></path>
+            <line x1="12" y1="6" x2="12" y2="16"></line>
+            <circle cx="12" cy="11" r="1.4" fill="currentColor"></circle>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-title">សាស្រ្តាស្លឹករឹត</span>
+          <span class="brand-sub">មរតកបុរាណខ្មែរ</span>
+        </span>
+      </a>
+
+      <nav id="main-nav" class="main-nav" aria-label="ម៉ឺនុយចម្បង">
+        <ul id="nav-list" class="nav-list">
+          <span id="nav-host-pill" class="nav-host-pill" aria-hidden="true"></span>
+          <li>
+            <a href="#home" class="nav-link is-active" data-host-color="#1e7366"
+              data-host-soft="rgba(30, 115, 102, 0.22)" data-host-glow="rgba(30, 115, 102, 0.44)">
+              <span class="menu-click-ring" aria-hidden="true"></span>
+              ទំព័រដើម
+            </a>
+          </li>
+          <li>
+            <a href="#history" class="nav-link" data-host-color="#b58837" data-host-soft="rgba(181, 136, 55, 0.22)"
+              data-host-glow="rgba(181, 136, 55, 0.44)">
+              <span class="menu-click-ring" aria-hidden="true"></span>
+              ប្រវត្តិសាស្ត្រ
+            </a>
+          </li>
+          <li>
+            <a href="#documents" class="nav-link" data-host-color="#286f80" data-host-soft="rgba(40, 111, 128, 0.22)"
+              data-host-glow="rgba(40, 111, 128, 0.44)">
+              <span class="menu-click-ring" aria-hidden="true"></span>
+              ឯកសារប្រវត្តិ
+            </a>
+          </li>
+          <li>
+            <a href="#process" class="nav-link" data-host-color="#2c8467" data-host-soft="rgba(44, 132, 103, 0.22)"
+              data-host-glow="rgba(44, 132, 103, 0.44)">
+              <span class="menu-click-ring" aria-hidden="true"></span>
+              ការចារស្លឹករឹត
+            </a>
+          </li>
+          <li>
+            <a href="#gallery" class="nav-link" data-host-color="#2b6a94" data-host-soft="rgba(43, 106, 148, 0.22)"
+              data-host-glow="rgba(43, 106, 148, 0.44)">
+              <span class="menu-click-ring" aria-hidden="true"></span>
+              បណ្ណសាររូប/វីឌីអូ
+            </a>
+          </li>
+          <li>
+            <a href="#upload" class="nav-link" data-host-color="#5d5396" data-host-soft="rgba(93, 83, 150, 0.22)"
+              data-host-glow="rgba(93, 83, 150, 0.44)">
+              <span class="menu-click-ring" aria-hidden="true"></span>
+              បញ្ចូលឯកសារ
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="ប្តូរម៉ូដថ្ងៃ ឬម៉ូដយប់ការពារភ្នែក"
+          aria-pressed="false" title="ប្តូរទៅម៉ូដយប់ ការពារភ្នែក">
+          <span class="theme-toggle-icon" aria-hidden="true">
+            <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+          </span>
+          <span id="theme-toggle-label" class="theme-toggle-label">ម៉ូដថ្ងៃ</span>
+        </button>
+
+        <button id="mobile-toggle" class="mobile-toggle" type="button" aria-label="បើក ឬបិទម៉ឺនុយ" aria-expanded="false"
+          aria-controls="main-nav">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <line x1="4" y1="7" x2="20" y2="7"></line>
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <line x1="4" y1="17" x2="20" y2="17"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ផ្នែកទី ១: ទំព័រដើម (Hero Section — បង្ហាញភ្លាមៗយ៉ាងច្បាស់ និងលឿន) -->
+    <section id="home" class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="hero-badge">✦ មរតកអក្សរសិល្ប៍ និងបញ្ញាញាណខ្មែរ</span>
+          <h1 class="hero-title">
+            សាស្រ្តាស្លឹករឹត <span class="hero-highlight">កំណប់ចំណេះដឹងបុរាណ</span> លើផ្ទៃ<span
+              class="nowrap">ស្លឹកទ្រាំង</span>
+          </h1>
+          <p class="hero-desc">
+            ស្វែងយល់ពីសិល្បៈចារសាស្រ្តាស្លឹករឹតដែលជាសៀវភៅដំបូងរបស់បុព្វបុរសខ្មែរ រួមទាំងចូលរួមចែករំលែក
+            និងរក្សាទុករូបភាព ឬវីឌីអូឯកសារសាស្រ្តាបុរាណនៅក្នុងបណ្ណសារឌីជីថលដ៏ស្រឡះស្អាតនេះ។
+          </p>
+
+          <div class="hero-actions">
+            <a href="#upload" class="btn btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              បញ្ចូលរូបភាព / វីឌីអូ
+            </a>
+            <a href="#gallery" class="btn btn-outline">រុករកបណ្ណសារឯកសារ</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <strong id="stat-media-count">4+</strong>
+              <span>ឯកសារក្នុងបណ្ណសារ</span>
+            </div>
+            <div class="stat-item">
+              <strong id="stat-user-uploads">0</strong>
+              <span>User បានបញ្ចូល</span>
+            </div>
+            <div class="stat-item">
+              <strong>Lazy Load</strong>
+              <span>ស្រាល និងលឿនក្នុង Browser</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <figure class="hero-frame">
+            <img src="assets/images/hero-manuscript.jpg" alt="គម្ពីរសាស្រ្តាស្លឹករឹតបុរាណខ្មែរចងដោយខ្សែសូត្រក្រហម"
+              fetchpriority="high" decoding="async" />
+            <figcaption class="hero-caption-card">
+              <div>
+                <strong>គម្ពីរសាស្រ្តាស្លឹករឹតខ្មែរ</strong>
+                <p>ចងភ្ជាប់ដោយខ្សែសូត្រក្រហម និងក្បាំងឈើក្បាច់មាស</p>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ផ្នែកទី ២: ប្រវត្តិ និងអត្ថន័យ (អូសដល់ចាំលោតផុសឡើង) -->
+    <section id="history" class="section section-alt lazy-section">
+      <div class="container">
+        <header class="section-header reveal-item">
+          <span class="section-kicker">ប្រវត្តិ និងតម្លៃវប្បធម៌</span>
+          <h2 class="section-title">តើសាស្រ្តាស្លឹករឹតមានសារៈសំខាន់អ្វីខ្លះ?</h2>
+          <p class="section-subtitle">
+            មុនពេលមានក្រដាស និងម៉ាស៊ីនបោះពុម្ព បុព្វបុរសខ្មែរបានប្រើប្រាស់ស្លឹកទ្រាំងដើម្បីកត់ត្រាធម៌វិន័យ
+            ប្រវត្តិសាស្ត្រ ក្បួនឱសថបុរាណ និងអក្សរសិល្ប៍រឿងព្រេងផ្សេងៗទុកជាកេរមរតកដល់កូនចៅជំនាន់ក្រោយ។
+          </p>
+        </header>
+
+        <div class="grid-2" style="margin-bottom: 40px;">
+          <div class="story-image-wrap reveal-item reveal-left">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 3'%3E%3C/svg%3E"
+              data-src="assets/images/temple-archive.jpg" alt="បណ្ណាល័យហោត្រ័យរក្សាសាស្រ្តាស្លឹករឹតក្នុងវត្តអារាម"
+              loading="lazy" decoding="async" />
+          </div>
+
+          <div class="reveal-item reveal-right">
+            <h3 style="font-size: 1.5rem; margin-bottom: 14px;">បណ្ណាល័យហោត្រ័យ៖ ឃ្លាំងរក្សាប្រាជ្ញាខ្មែរ</h3>
+            <p style="margin-bottom: 14px;">
+              សាស្រ្តាស្លឹករឹតត្រូវបានតម្កល់ទុកយ៉ាងគោរពនៅតាមវត្តអារាម ជាពិសេសនៅក្នុង «ហោត្រ័យ»
+              ឬទូឈើឆ្លាក់ក្បាច់យ៉ាងផ្ចិតផ្ចង់។
+              គម្ពីរនីមួយៗត្រូវបានរុំដោយកំណាត់សំពត់ស្អាត ដើម្បីការពារពីធូលី សំណើម និងសត្វល្អិតកាត់បំផ្លាញ។
+            </p>
+            <p>
+              ការអភិរក្សសាស្រ្តាស្លឹករឹតជាទម្រង់ឌីជីថល តាមរយៈការថតរូបភាព និងវីឌីអូឯកសារ
+              គឺជាវិធីដ៏សំខាន់ដើម្បីជួយឲ្យមរតកទាំងនេះនៅគង់វង្សជារៀងរហូត។
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card reveal-item reveal-delay-1">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <h3>សាស្រ្តាទេសន៍</h3>
+            <p>កត់ត្រាពុទ្ធវចនៈ ជាតក និងគម្ពីរធម៌វិន័យសម្រាប់ព្រះសង្ឃសូត្រ និងសម្តែងធម៌ទេសនាប្រដៅពុទ្ធបរិស័ទ។</p>
+          </article>
+
+          <article class="card reveal-item reveal-delay-2">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+            </div>
+            <h3>សាស្រ្តាល្បែង</h3>
+            <p>ប្រមូលផ្តុំរឿងព្រេង អក្សរសិល្ប៍កំណាព្យ និងរឿងនិទានអប់រំសីលធម៌ដ៏ល្បីល្បាញរបស់សង្គមខ្មែរ។</p>
+          </article>
+
+          <article class="card reveal-item reveal-delay-3">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 8v4l3 3"></path>
+              </svg>
+            </div>
+            <h3>សាស្រ្តាក្បួនច្បាប់</h3>
+            <p>ផ្ទុកក្បួនហោរាសាស្ត្រ ក្បួនថ្នាំបុរាណ វេយ្យាករណ៍ ច្បាប់ទូន្មាន និងប្រវត្តិសាស្ត្រពង្សាវតារខ្មែរ។</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ផ្នែកទី ៣: ប្រព័ន្ធឯកសារប្រវត្តិសាស្រ្តាស្លឹករឹត (Lazy Hydrated ពេលអូសមកដល់) -->
+    <section id="documents" class="section lazy-section">
+      <div class="container">
+        <header class="section-header reveal-item">
+          <span class="section-kicker">បណ្ណាល័យឯកសារប្រវត្តិសាស្ត្រ</span>
+          <h2 class="section-title">ប្រព័ន្ធឯកសារស្តីពីប្រវត្តិសាស្រ្តាស្លឹករឹតខ្មែរ</h2>
+          <p class="section-subtitle">
+            អាន ស្រាវជ្រាវ ចម្លង ឬទាញយកឯកសារប្រវត្តិសាស្រ្តាស្លឹករឹតតាមសម័យកាល រួមទាំងអាចបន្ថែមអត្ថបទ
+            ឬភ្ជាប់ឯកសារ PDF/TXT ចូលក្នុងបណ្ណាល័យនេះបានផងដែរ។
+          </p>
+        </header>
+
+        <!-- ខ្សែបន្ទាត់ប្រវត្តិសាស្ត្រសង្ខេបតាមសម័យកាល -->
+        <div id="history-timeline" class="timeline-strip"></div>
+
+        <!-- របារត្រងប្រភេទ ស្វែងរក និងប៊ូតុងបន្ថែមឯកសារ -->
+        <div class="doc-toolbar reveal-item">
+          <div class="filter-tabs" role="tablist" aria-label="ត្រងប្រភេទឯកសារប្រវត្តិ">
+            <button type="button" class="filter-tab doc-filter-tab is-active" data-doc-filter="all">ទាំងអស់</button>
+            <button type="button" class="filter-tab doc-filter-tab"
+              data-doc-filter="ប្រវត្តិសាស្ត្រ">ប្រវត្តិសាស្ត្រ</button>
+            <button type="button" class="filter-tab doc-filter-tab" data-doc-filter="អក្សរសាស្ត្រ">អក្សរសាស្ត្រ</button>
+            <button type="button" class="filter-tab doc-filter-tab" data-doc-filter="សិប្បកម្ម">សិប្បកម្ម</button>
+            <button type="button" class="filter-tab doc-filter-tab" data-doc-filter="ការអភិរក្ស">ការអភិរក្ស</button>
+            <button type="button" class="filter-tab doc-filter-tab" data-doc-filter="user">User បន្ថែម</button>
+          </div>
+
+          <div class="doc-toolbar-right">
+            <div class="search-box" style="min-width: 210px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input id="doc-search-input" type="search" placeholder="ស្វែងរកឯកសារប្រវត្តិ..."
+                aria-label="ស្វែងរកឯកសារប្រវត្តិ" />
+            </div>
+
+            <button id="open-add-doc-btn" type="button" class="btn btn-primary"
+              style="padding: 10px 18px; font-size: 0.88rem;">
+              + បន្ថែមឯកសារប្រវត្តិ
+            </button>
+          </div>
+        </div>
+
+        <!-- ក្រឡាកាតឯកសារប្រវត្តិ -->
+        <div id="doc-grid" class="doc-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ផ្នែកទី ៤: ដំណាក់កាលផលិត និងចារសាស្រ្តា (អូសដល់ចាំលោតផុសឡើង) -->
+    <section id="process" class="section section-alt lazy-section">
+      <div class="container">
+        <header class="section-header reveal-item">
+          <span class="section-kicker">សិល្បៈ និងហត្ថកម្មប្រពៃណី</span>
+          <h2 class="section-title">ដំណាក់កាលទាំង ៤ នៃការចារសាស្រ្តាស្លឹករឹត</h2>
+          <p class="section-subtitle">
+            ទម្រាំក្លាយជាគម្ពីរសាស្រ្តាមួយខ្សែ សិប្បករត្រូវឆ្លងកាត់ដំណាក់កាលយ៉ាងល្អិតល្អន់ និងអត់ធ្មត់ខ្ពស់។
+          </p>
+        </header>
+
+        <div class="grid-4" style="margin-bottom: 42px;">
+          <article class="step-card reveal-item reveal-delay-1">
+            <span class="step-number">១</span>
+            <h3>ជ្រើសរើសស្លឹកទ្រាំង</h3>
+            <p>កាត់ស្លឹកទ្រាំងខ្ចីល្មមដែលមិនទាន់លាតពេញលេញ ដើម្បីឲ្យសាច់ស្លឹកទន់ ស្វិត និងជាប់ធន់បានរាប់រយឆ្នាំ។</p>
+          </article>
+
+          <article class="step-card reveal-item reveal-delay-2">
+            <span class="step-number">២</span>
+            <h3>ស្ងោរ ហាល និងតម្រឹម</h3>
+            <p>យកស្លឹកទៅស្ងោរ ហាលសន្សើម និងហាលថ្ងៃឲ្យស្ងួតស្មើ រួចកាត់តម្រឹមទំហំឲ្យស្មើគ្នា និងចោះរន្ធដោតខ្សែ។</p>
+          </article>
+
+          <article class="step-card reveal-item reveal-delay-3">
+            <span class="step-number">៣</span>
+            <h3>ចារដោយដែកចារ</h3>
+            <p>ប្រើដែកចារមុតស្រួចឆ្លាក់តួអក្សរខ្មែរលើផ្ទៃស្លឹករឹតតាមបន្ទាត់ត្រង់ស្មើយ៉ាងប្រណីត។</p>
+          </article>
+
+          <article class="step-card reveal-item reveal-delay-4">
+            <span class="step-number">៤</span>
+            <h3>ជូតទឹកខ្មៅ និងចងខ្សែ</h3>
+            <p>ជូតម្រែងភ្លើងលាយប្រេងធម្មជាតិចូលក្នុងស្នាមចារឲ្យអក្សរលេចច្បាស់ខ្មៅក្រឹប រួចដោតខ្សែចងជាខ្សែគម្ពីរ។</p>
+          </article>
+        </div>
+
+        <div class="grid-2">
+          <div class="story-image-wrap reveal-item reveal-left">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 3'%3E%3C/svg%3E"
+              data-src="assets/images/crafting-leaves.jpg" alt="សិប្បករខ្មែរចារអក្សរលើស្លឹករឹតដោយប្រើដែកចារ"
+              loading="lazy" decoding="async" />
+          </div>
+          <div class="story-image-wrap reveal-item reveal-right">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 3'%3E%3C/svg%3E"
+              data-src="assets/images/palm-detail.jpg" alt="ភាពលម្អិតនៃអក្សរចារខ្មែរបុរាណលើផ្ទៃស្លឹករឹត" loading="lazy"
+              decoding="async" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ផ្នែកទី ៥: បណ្ណសាររូបភាព និងវីឌីអូ (Lazy Hydrated ពេលអូសមកដល់) -->
+    <section id="gallery" class="section lazy-section">
+      <div class="container">
+        <header class="section-header reveal-item">
+          <span class="section-kicker">បណ្ណសារឌីជីថល</span>
+          <h2 class="section-title">បណ្ណសាររូបភាព និងវីឌីអូសាស្រ្តាស្លឹករឹត</h2>
+          <p class="section-subtitle">
+            រូបភាព និងវីឌីអូទាំងអស់ត្រូវបានផ្ទុកតែពេលអ្នកអូសមកដល់ប៉ុណ្ណោះ ដើម្បីឲ្យវេបសាយស្រាល និងដំណើរការលឿនបំផុត។
+            ចុចលើកាតនីមួយៗដើម្បីមើលពេញអេក្រង់។
+          </p>
+        </header>
+
+        <div class="gallery-toolbar reveal-item">
+          <div class="filter-tabs" role="tablist" aria-label="ត្រងប្រភេទឯកសារ">
+            <button type="button" class="filter-tab is-active" data-filter="all">ទាំងអស់</button>
+            <button type="button" class="filter-tab" data-filter="image">រូបភាព</button>
+            <button type="button" class="filter-tab" data-filter="video">វីឌីអូ</button>
+            <button type="button" class="filter-tab" data-filter="user">ឯកសារ User បញ្ចូល</button>
+          </div>
+
+          <div class="search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input id="gallery-search" type="search" placeholder="ស្វែងរកតាមចំណងជើង ឬប្រភេទ..."
+              aria-label="ស្វែងរកឯកសារក្នុងបណ្ណសារ" />
+          </div>
+        </div>
+
+        <!-- ក្រឡាបណ្ណសារត្រូវបានបង្កើតឡើងដោយ JavaScript ពេលអូសមកដល់ -->
+        <div id="media-grid" class="media-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ផ្នែកទី ៦: អនុញ្ញាតឲ្យ User បញ្ចូលរូបភាព និងវីឌីអូ -->
+    <section id="upload" class="section section-alt lazy-section">
+      <div class="container">
+        <header class="section-header reveal-item">
+          <span class="section-kicker">ចូលរួមចែករំលែកមរតក</span>
+          <h2 class="section-title">បញ្ចូលរូបភាព និងវីឌីអូសាស្រ្តាស្លឹករឹត</h2>
+          <p class="section-subtitle">
+            អ្នកប្រើប្រាស់មានសិទ្ធិបញ្ចូលរូបភាព ឬវីឌីអូដោយផ្ទាល់។ ឯកសារដែលបានបញ្ចូលនឹងរក្សាទុកក្នុង Browser (IndexedDB)
+            ហើយបង្ហាញភ្លាមៗនៅក្នុងបណ្ណសារខាងលើ។
+          </p>
+        </header>
+
+        <div class="upload-shell reveal-item">
+          <div>
+            <div id="upload-dropzone" class="dropzone" role="button" tabindex="0"
+              aria-label="ជ្រើសរើស ឬអូសទម្លាក់រូបភាព និងវីឌីអូ">
+              <input id="media-file-input" type="file" accept="image/*,video/*" hidden />
+              <div class="dropzone-icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <h3 style="font-size: 1.12rem;">ចុចជ្រើសរើស ឬអូសឯកសារទម្លាក់ទីនេះ</h3>
+              <p id="upload-file-status" style="font-size: 0.88rem;">
+                គាំទ្ររូបភាព (JPG, PNG, WEBP) និងវីឌីអូ (MP4, WEBM)
+              </p>
+              <div id="upload-preview" class="dropzone-preview" hidden></div>
+            </div>
+          </div>
+
+          <form id="media-upload-form" class="upload-form">
+            <span id="storage-mode-pill" class="storage-mode-pill">● រក្សាទុកស្វ័យប្រវត្តិ (មិនបាត់ពេល Refresh)</span>
+
+            <div class="form-group">
+              <label for="media-title-input">ចំណងជើងឯកសារ *</label>
+              <input id="media-title-input" class="form-control" type="text"
+                placeholder="ឧ. សាស្រ្តាស្លឹករឹតវត្តបុរាណខេត្តសៀមរាប" required />
+            </div>
+
+            <div class="form-group">
+              <label for="media-category-input">ប្រភេទឯកសារ</label>
+              <select id="media-category-input" class="form-control">
+                <option value="សាស្រ្តាបុរាណ">សាស្រ្តាបុរាណ</option>
+                <option value="ការចារស្លឹករឹត">ការចារស្លឹករឹត</option>
+                <option value="បណ្ណាល័យហោត្រ័យ">បណ្ណាល័យហោត្រ័យ</option>
+                <option value="វីឌីអូឯកសារ">វីឌីអូឯកសារ</option>
+                <option value="អក្សរសិល្ប៍បុរាណ">អក្សរសិល្ប៍បុរាណ</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="media-author-input">ឈ្មោះអ្នកបញ្ចូល</label>
+              <input id="media-author-input" class="form-control" type="text"
+                placeholder="បញ្ចូលឈ្មោះរបស់អ្នក (មិនបង្ខំ)" />
+            </div>
+
+            <div class="form-group">
+              <label for="media-desc-input">ពិពណ៌នាសង្ខេប</label>
+              <textarea id="media-desc-input" class="form-control" rows="3"
+                placeholder="សរសេរព័ត៌មានខ្លីៗអំពីរូបភាព ឬវីឌីអូនេះ..."></textarea>
+            </div>
+
+            <button id="upload-submit-btn" type="submit" class="btn btn-primary" style="width: 100%;">
+              រក្សាទុក និងបង្ហោះចូលបណ្ណសារ
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ជើងទំព័រ (Footer) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>សាស្រ្តាស្លឹករឹត • មរតកបុរាណខ្មែរ</h3>
+          <p>
+            វេបសាយបង្កើតឡើងដោយហេដ្ឋារចនាសម្ព័ន្ធកូដច្បាស់លាស់ ស្អាត និងបង្កើនល្បឿន Browser តាមរយៈ
+            Scroll Reveal និង Lazy Loading។
+          </p>
+        </div>
+
+        <div>
+          <h4>តំណភ្ជាប់រហ័ស</h4>
+          <ul class="footer-links">
+            <li><a href="#home">ទំព័រដើម</a></li>
+            <li><a href="#history">ប្រវត្តិ និងអត្ថន័យ</a></li>
+            <li><a href="#documents">ប្រព័ន្ធឯកសារប្រវត្តិ</a></li>
+            <li><a href="#process">ដំណាក់កាលចារសាស្រ្តា</a></li>
+            <li><a href="#gallery">បណ្ណសាររូបភាព និងវីឌីអូ</a></li>
+            <li><a href="#upload">បញ្ចូលឯកសារថ្មី</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>រចនាសម្ព័ន្ធថតឯកសារ</h4>
+          <ul class="footer-links">
+            <li><code>index.html</code> — ទំព័រចម្បង</li>
+            <li><code>assets/css/</code> — ឯកសាររចនាបថ</li>
+            <li><code>assets/js/</code> — ប្រព័ន្ធមុខងារ JS</li>
+            <li><code>assets/images/</code> — ថតផ្ទុករូបភាព</li>
+            <li><code>assets/videos/</code> — ថតផ្ទុកវីឌីអូ</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 បណ្ណសារសាស្រ្តាស្លឹករឹតខ្មែរ</span>
+        <span>រចនាឡើងសម្រាប់ការថែរក្សា និងចែករំលែកមរតកជាតិ</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal សម្រាប់មើលរូបភាព និងវីឌីអូពេញអេក្រង់ -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button id="lightbox-close" class="lightbox-close" type="button" aria-label="បិទផ្ទាំងមើល">✕</button>
+    <div class="lightbox-dialog">
+      <div id="lightbox-media" class="lightbox-media"></div>
+      <div class="lightbox-info">
+        <div>
+          <h3 id="lightbox-title" style="margin-bottom: 6px;"></h3>
+          <p id="lightbox-desc" style="margin-bottom: 8px;"></p>
+          <small id="lightbox-meta" style="color: var(--text-muted);"></small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ផ្ទាំងអានឯកសារប្រវត្តិ (Distraction-Free Document Reader Modal) -->
+  <div id="doc-reader-modal" class="doc-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="doc-reader-dialog">
+      <div class="doc-reader-header">
+        <div class="doc-reader-controls">
+          <button id="doc-font-dec" type="button" class="reader-tool-btn" title="បន្ថយទំហំអក្សរ">A-</button>
+          <button id="doc-font-inc" type="button" class="reader-tool-btn" title="បង្កើនទំហំអក្សរ">A+</button>
+          <button id="doc-copy-btn" type="button" class="reader-tool-btn">ចម្លងអត្ថបទ</button>
+          <button id="doc-download-btn" type="button" class="reader-tool-btn">ទាញយក .txt</button>
+          <button id="doc-reader-delete" type="button" class="btn btn-danger-soft" hidden>លុបឯកសារ</button>
+        </div>
+        <button id="doc-reader-close" type="button" class="reader-tool-btn" aria-label="បិទផ្ទាំងអាន">បិទ ✕</button>
+      </div>
+
+      <article id="doc-reader-body" class="doc-reader-body">
+        <div id="doc-reader-meta" class="doc-reader-meta"></div>
+        <h2 id="doc-reader-title" class="doc-reader-title"></h2>
+        <div id="doc-reader-content" class="doc-reader-content"></div>
+      </article>
+
+      <div class="doc-reader-footer">
+        <button id="doc-prev-btn" type="button" class="reader-tool-btn">← ឯកសារមុន</button>
+        <button id="doc-next-btn" type="button" class="reader-tool-btn">ឯកសារបន្ទាប់ →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ផ្ទាំងបន្ថែមឯកសារប្រវត្តិថ្មី (Add Historical Document Modal) -->
+  <div id="add-doc-modal" class="doc-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="doc-form-dialog">
+      <div class="doc-reader-header">
+        <h3 style="font-size: 1.08rem;">បន្ថែមឯកសារប្រវត្តិសាស្រ្តាស្លឹករឹតថ្មី</h3>
+        <button id="add-doc-close" type="button" class="reader-tool-btn" aria-label="បិទផ្ទាំង">បិទ ✕</button>
+      </div>
+      <form id="add-doc-form" class="doc-form-body">
+        <div class="form-group">
+          <label for="doc-title-input">ចំណងជើងឯកសារប្រវត្តិ *</label>
+          <input id="doc-title-input" class="form-control" type="text"
+            placeholder="ឧ. ប្រវត្តិគម្ពីរសាស្រ្តាវត្តបុរាណខេត្តបាត់ដំបង" required />
+        </div>
+
+        <div class="doc-form-row">
+          <div class="form-group">
+            <label for="doc-category-input">ប្រភេទឯកសារ</label>
+            <select id="doc-category-input" class="form-control">
+              <option value="ប្រវត្តិសាស្ត្រ">ប្រវត្តិសាស្ត្រ</option>
+              <option value="អក្សរសាស្ត្រ">អក្សរសាស្ត្រ</option>
+              <option value="សិប្បកម្ម">សិប្បកម្ម</option>
+              <option value="ការអភិរក្ស">ការអភិរក្ស</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="doc-era-input">សម័យកាល / ឆ្នាំ</label>
+            <input id="doc-era-input" class="form-control" type="text" placeholder="ឧ. សតវត្សទី ១៩" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="doc-author-input">អ្នករៀបរៀង ឬប្រភពឯកសារ</label>
+          <input id="doc-author-input" class="form-control" type="text" placeholder="ឈ្មោះអ្នកចងក្រង (មិនបង្ខំ)" />
+        </div>
+
+        <div class="form-group">
+          <label for="doc-body-input">ខ្លឹមសារឯកសារប្រវត្តិ</label>
+          <textarea id="doc-body-input" class="form-control" rows="5"
+            placeholder="សរសេរ ឬចម្លងខ្លឹមសារប្រវត្តិសាស្រ្តាស្លឹករឹតដាក់ទីនេះ..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="doc-file-input">ភ្ជាប់ឯកសារ PDF ឬ TXT បន្ថែម (មិនបង្ខំ • ក្រោម 20MB)</label>
+          <input id="doc-file-input" class="form-control" type="file" accept=".pdf,.txt,.doc,.docx" />
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 4px;">
+          រក្សាទុកចូលបណ្ណាល័យឯកសារ
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ប៊ូតុងត្រឡប់ទៅខាងលើ និងសារជូនដំណឹង -->
+  <button id="back-to-top" class="back-to-top" type="button" aria-label="ត្រឡប់ទៅខាងលើ">↑</button>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- ឯកសារ JavaScript រៀបចំតាមមុខងារច្បាស់លាស់ (ប្រើ defer ដើម្បីឲ្យផ្ទុកលឿន) -->
+  <script defer src="assets/js/theme-toggle.js"></script>
+  <script defer src="assets/js/cloud-config.js"></script>
+  <script defer src="assets/data/history-docs.js"></script>
+  <script defer src="assets/js/storage.js"></script>
+  <script defer src="assets/js/menu-effect.js"></script>
+  <script defer src="assets/js/scroll-reveal.js"></script>
+  <script defer src="assets/js/doc-library.js"></script>
+  <script defer src="assets/js/media-uploader.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</body>
+
+</html>

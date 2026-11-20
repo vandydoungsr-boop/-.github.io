@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/layout.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/folders.css" />
   <link rel="stylesheet" href="assets/css/documents.css" />
   <link rel="stylesheet" href="assets/css/animations.css" />
 </head>
@@ -197,7 +198,7 @@
 
         <div class="hero-visual">
           <figure class="hero-frame">
-            <img src="assets/images/hero-manuscript.jpg" alt="គម្ពីរសាស្រ្តាស្លឹករឹតបុរាណខ្មែរចងដោយខ្សែសូត្រក្រហម"
+            <img src="assets/images/vb2.jpg" alt="គម្ពីរសាស្រ្តាស្លឹករឹតបុរាណខ្មែរចងដោយខ្សែសូត្រក្រហម"
               fetchpriority="high" decoding="async" />
             <figcaption class="hero-caption-card">
               <div>
@@ -395,10 +396,11 @@
 
         <div class="gallery-toolbar reveal-item">
           <div class="filter-tabs" role="tablist" aria-label="ត្រងប្រភេទឯកសារ">
-            <button type="button" class="filter-tab is-active" data-filter="all">ទាំងអស់</button>
-            <button type="button" class="filter-tab" data-filter="image">រូបភាព</button>
-            <button type="button" class="filter-tab" data-filter="video">វីឌីអូ</button>
-            <button type="button" class="filter-tab" data-filter="user">ឯកសារ User បញ្ចូល</button>
+            <button type="button" class="filter-tab gallery-filter-tab is-active" data-filter="all">ទាំងអស់</button>
+            <button type="button" class="filter-tab gallery-filter-tab" data-filter="folder">ថតសាស្រ្តា (Folder)</button>
+            <button type="button" class="filter-tab gallery-filter-tab" data-filter="image">រូបភាព</button>
+            <button type="button" class="filter-tab gallery-filter-tab" data-filter="video">វីឌីអូ</button>
+            <button type="button" class="filter-tab gallery-filter-tab" data-filter="user">User បញ្ចូល</button>
           </div>
 
           <div class="search-box">
@@ -411,28 +413,40 @@
           </div>
         </div>
 
-        <!-- ក្រឡាបណ្ណសារត្រូវបានបង្កើតឡើងដោយ JavaScript ពេលអូសមកដល់ -->
+        <!-- ថតសាស្រ្តាស្លឹករឹត – ក្រាំង (ចុចលើសន្លឹកគម្ពីរដើម្បីបើកមើលរូបភាពទាំងអស់ខាងក្នុង) -->
+        <div id="folder-showcase" class="folder-showcase">
+          <div class="folder-showcase-header">
+            <h3 class="folder-showcase-title">សាស្រ្តាស្លឹករឹត – ក្រាំង (ថតឯកសារ)</h3>
+            <a href="#upload" class="btn btn-outline" style="padding: 7px 16px; font-size: 0.84rem;">
+              + បញ្ចូល File ឬ Folder ថ្មី
+            </a>
+          </div>
+          <div id="folder-grid" class="folder-grid" aria-live="polite"></div>
+        </div>
+
+        <!-- ក្រឡាបណ្ណសារឯកសារទោល -->
         <div id="media-grid" class="media-grid" aria-live="polite"></div>
       </div>
     </section>
 
-    <!-- ផ្នែកទី ៦: អនុញ្ញាតឲ្យ User បញ្ចូលរូបភាព និងវីឌីអូ -->
+    <!-- ផ្នែកទី ៦: អនុញ្ញាតឲ្យ User បញ្ចូលរូបភាព និងវីឌីអូ (File ឬ Folder) -->
     <section id="upload" class="section section-alt lazy-section">
       <div class="container">
         <header class="section-header reveal-item">
           <span class="section-kicker">ចូលរួមចែករំលែកមរតក</span>
-          <h2 class="section-title">បញ្ចូលរូបភាព និងវីឌីអូសាស្រ្តាស្លឹករឹត</h2>
+          <h2 class="section-title">បញ្ចូលរូបភាព និងវីឌីអូ (File ឬ Folder)</h2>
           <p class="section-subtitle">
-            អ្នកប្រើប្រាស់មានសិទ្ធិបញ្ចូលរូបភាព ឬវីឌីអូដោយផ្ទាល់។ ឯកសារដែលបានបញ្ចូលនឹងរក្សាទុកក្នុង Browser (IndexedDB)
-            ហើយបង្ហាញភ្លាមៗនៅក្នុងបណ្ណសារខាងលើ។
+            អាចបញ្ចូលជា File ទោល, ជ្រើសច្រើន File ឬជ្រើសទាំង Folder តែម្តង! ពេលចុចបង្ហោះនឹងលោតបង្ហាញភ្លាមៗដោយរលូន
+            មិនចាំបាច់អង្គុយចាំឡើយ។
           </p>
         </header>
 
         <div class="upload-shell reveal-item">
           <div>
             <div id="upload-dropzone" class="dropzone" role="button" tabindex="0"
-              aria-label="ជ្រើសរើស ឬអូសទម្លាក់រូបភាព និងវីឌីអូ">
-              <input id="media-file-input" type="file" accept="image/*,video/*" hidden />
+              aria-label="ជ្រើសរើស ឬអូសទម្លាក់ File ឬ Folder រូបភាព និងវីឌីអូ">
+              <input id="media-file-input" type="file" accept="image/*,video/*" multiple hidden />
+              <input id="media-folder-input" type="file" webkitdirectory directory multiple hidden />
               <div class="dropzone-icon" aria-hidden="true">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">
@@ -441,21 +455,54 @@
                   <line x1="12" y1="3" x2="12" y2="15"></line>
                 </svg>
               </div>
-              <h3 style="font-size: 1.12rem;">ចុចជ្រើសរើស ឬអូសឯកសារទម្លាក់ទីនេះ</h3>
-              <p id="upload-file-status" style="font-size: 0.88rem;">
-                គាំទ្ររូបភាព (JPG, PNG, WEBP) និងវីឌីអូ (MP4, WEBM)
+              <h3 style="font-size: 1.1rem;">អូស File ឬ Folder ទម្លាក់ទីនេះ ឬចុចប៊ូតុងខាងក្រោម</h3>
+              <p id="upload-file-status" style="font-size: 0.86rem;">
+                គាំទ្រជ្រើស File ទោល, ច្រើន File ឬជ្រើសទាំង Folder (រូបភាព &amp; វីឌីអូ)
               </p>
+
+              <div class="upload-picker-actions">
+                <button id="pick-files-btn" type="button" class="picker-chip-btn">
+                  📄 ជ្រើស File (១ ឬច្រើន)
+                </button>
+                <button id="pick-folder-btn" type="button" class="picker-chip-btn is-accent">
+                  📁 ជ្រើសទាំង Folder
+                </button>
+              </div>
+
               <div id="upload-preview" class="dropzone-preview" hidden></div>
             </div>
           </div>
 
           <form id="media-upload-form" class="upload-form">
-            <span id="storage-mode-pill" class="storage-mode-pill">● រក្សាទុកស្វ័យប្រវត្តិ (មិនបាត់ពេល Refresh)</span>
+            <span id="storage-mode-pill" class="storage-mode-pill">⚡ បង្ហាញភ្លាមៗ មិនចាំបាច់អង្គុយចាំ (គាំទ្រ File &amp; Folder)</span>
+
+            <!-- កាតជំនួយរៀបចំ Supabase Cloud (បង្ហាញតែពេលមិនទាន់ Run SQL ក្នុង Supabase) -->
+            <div id="cloud-helper-card" class="cloud-helper-card" hidden>
+              <div class="cloud-helper-header">
+                <span>⚙️</span> <span>តម្រូវឲ្យ Run កូដក្នុង Supabase ១ ជំហាន</span>
+              </div>
+              <p>
+                ដើម្បីឲ្យអ្នកដទៃ (កុំព្យូទ័រ និងទូរស័ព្ទផ្សេង) អាចមើលឃើញរូបភាពដែលអ្នកបានបញ្ចូលរួមគ្នា សូមចម្លងកូដ SQL ទៅ Run ក្នុង Supabase៖
+              </p>
+              <ol class="cloud-helper-steps">
+                <li>ចុចប៊ូតុង <strong>«ចម្លងកូដ SQL (Copy)»</strong> ខាងក្រោម</li>
+                <li>ចុចប៊ូតុង <strong>«បើក Supabase SQL Editor»</strong></li>
+                <li>បិទភ្ជាប់ (Paste) កូដចូលក្នុងប្រអប់ រួចចុច <strong>Run</strong> ជាការស្រេច!</li>
+              </ol>
+              <div class="cloud-helper-actions">
+                <button id="copy-sql-setup-btn" type="button" class="btn btn-primary" style="padding: 7px 14px; font-size: 0.84rem;">
+                  📋 ចម្លងកូដ SQL (Copy)
+                </button>
+                <a id="open-sql-editor-link" href="https://supabase.com/dashboard/project/lktvuvgwciwltjixbmxt/sql/new" target="_blank" rel="noopener" class="btn btn-outline" style="padding: 7px 14px; font-size: 0.84rem;">
+                  🔗 បើក Supabase SQL Editor ↗
+                </a>
+              </div>
+            </div>
 
             <div class="form-group">
-              <label for="media-title-input">ចំណងជើងឯកសារ *</label>
+              <label for="media-title-input">ចំណងជើងគម្ពីរ / ថតឯកសារ *</label>
               <input id="media-title-input" class="form-control" type="text"
-                placeholder="ឧ. សាស្រ្តាស្លឹករឹតវត្តបុរាណខេត្តសៀមរាប" required />
+                placeholder="ឧ. ល្បើកព្រះត្រៃលក្ខណ៍ ឬ សាស្រ្តាស្លឹករឹតវត្តបុរាណ" required />
             </div>
 
             <div class="form-group">
@@ -469,6 +516,14 @@
               </select>
             </div>
 
+            <div id="cover-style-group" class="form-group" hidden>
+              <label for="folder-cover-style">រូបរាងគម្របថតសាស្រ្តា</label>
+              <select id="folder-cover-style" class="form-control">
+                <option value="plank">សន្លឹកឈើសាស្រ្តាបុរាណ (ដូចគម្ពីរក្រាំង)</option>
+                <option value="photo">ប្រើរូបភាពដំបូងក្នុងថតជាផ្ទៃគម្រប</option>
+              </select>
+            </div>
+
             <div class="form-group">
               <label for="media-author-input">ឈ្មោះអ្នកបញ្ចូល</label>
               <input id="media-author-input" class="form-control" type="text"
@@ -477,12 +532,12 @@
 
             <div class="form-group">
               <label for="media-desc-input">ពិពណ៌នាសង្ខេប</label>
-              <textarea id="media-desc-input" class="form-control" rows="3"
-                placeholder="សរសេរព័ត៌មានខ្លីៗអំពីរូបភាព ឬវីឌីអូនេះ..."></textarea>
+              <textarea id="media-desc-input" class="form-control" rows="2"
+                placeholder="សរសេរព័ត៌មានខ្លីៗអំពីឯកសារ ឬថតសាស្រ្តានេះ..."></textarea>
             </div>
 
             <button id="upload-submit-btn" type="submit" class="btn btn-primary" style="width: 100%;">
-              រក្សាទុក និងបង្ហោះចូលបណ្ណសារ
+              ⚡ បញ្ចូល និងបង្ហាញភ្លាមៗ
             </button>
           </form>
         </div>
@@ -533,7 +588,28 @@
     </div>
   </footer>
 
-  <!-- Lightbox Modal សម្រាប់មើលរូបភាព និងវីឌីអូពេញអេក្រង់ -->
+  <!-- ផ្ទាំងបើកមើលឯកសារទាំងអស់ក្នុងថតសាស្រ្តា (Folder Viewer Modal) -->
+  <div id="folder-modal" class="folder-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="folder-modal-dialog">
+      <div class="folder-modal-header">
+        <div class="folder-modal-title-wrap">
+          <h3 id="folder-modal-title"></h3>
+          <p id="folder-modal-sub"></p>
+        </div>
+        <div class="folder-modal-actions">
+          <input id="folder-add-more-input" type="file" accept="image/*,video/*" multiple hidden />
+          <button id="folder-modal-add-more" type="button" class="reader-tool-btn" hidden>+ បន្ថែមរូបចូលថត</button>
+          <button id="folder-modal-delete" type="button" class="btn btn-danger-soft" hidden>លុបថតនេះ</button>
+          <button id="folder-modal-close" type="button" class="reader-tool-btn" aria-label="បិទថតឯកសារ">បិទ ✕</button>
+        </div>
+      </div>
+      <div class="folder-modal-body">
+        <div id="folder-pages-grid" class="folder-pages-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal សម្រាប់មើលរូបភាព និងវីឌីអូពេញអេក្រង់ + ប្តូរទំព័រមុន/ក្រោយ -->
   <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
     <button id="lightbox-close" class="lightbox-close" type="button" aria-label="បិទផ្ទាំងមើល">✕</button>
     <div class="lightbox-dialog">
@@ -543,6 +619,10 @@
           <h3 id="lightbox-title" style="margin-bottom: 6px;"></h3>
           <p id="lightbox-desc" style="margin-bottom: 8px;"></p>
           <small id="lightbox-meta" style="color: var(--text-muted);"></small>
+        </div>
+        <div id="lightbox-nav-bar" class="lightbox-nav-bar" hidden>
+          <button id="lightbox-prev" type="button" class="lightbox-nav-btn">← ទំព័រមុន</button>
+          <button id="lightbox-next" type="button" class="lightbox-nav-btn">ទំព័រក្រោយ →</button>
         </div>
       </div>
     </div>
@@ -632,16 +712,16 @@
   <button id="back-to-top" class="back-to-top" type="button" aria-label="ត្រឡប់ទៅខាងលើ">↑</button>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- ឯកសារ JavaScript រៀបចំតាមមុខងារច្បាស់លាស់ (ប្រើ defer ដើម្បីឲ្យផ្ទុកលឿន) -->
-  <script defer src="assets/js/theme-toggle.js"></script>
-  <script defer src="assets/js/cloud-config.js"></script>
-  <script defer src="assets/data/history-docs.js"></script>
-  <script defer src="assets/js/storage.js"></script>
-  <script defer src="assets/js/menu-effect.js"></script>
-  <script defer src="assets/js/scroll-reveal.js"></script>
-  <script defer src="assets/js/doc-library.js"></script>
-  <script defer src="assets/js/media-uploader.js"></script>
-  <script defer src="assets/js/main.js"></script>
+  <!-- ឯកសារ JavaScript រៀបចំតាមមុខងារច្បាស់លាស់ -->
+  <script src="assets/js/theme-toggle.js"></script>
+  <script src="assets/js/cloud-config.js"></script>
+  <script src="assets/data/history-docs.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/menu-effect.js"></script>
+  <script src="assets/js/scroll-reveal.js"></script>
+  <script src="assets/js/doc-library.js"></script>
+  <script src="assets/js/media-uploader.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 
 </html>

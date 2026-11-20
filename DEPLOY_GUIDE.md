@@ -4,39 +4,34 @@
 
 ---
 
-## ផ្នែកទី ១៖ ភ្ជាប់ Supabase Cloud (ប្រើពេល ៣ នាទី • ឥតគិតថ្លៃ)
+## ផ្នែកទី ១៖ ដំណើរការកូដ SQL លើ Supabase (ប្រើពេល ១ នាទី)
 
-> **ចំណាំ៖** បើអ្នកមិនទាន់ចង់ភ្ជាប់ Supabase ទេ អាចរំលងទៅ **ផ្នែកទី ២** ភ្លាមៗបាន វេបសាយនៅតែដើរធម្មតា (រក្សាទុកក្នុង Browser ផ្ទាល់)។ បើចង់ឲ្យ User បញ្ចូលរូប/វីឌីអូហើយអ្នកទាំងអស់គ្នាមើលឃើញរួមគ្នា សូមធ្វើតាមជំហានខាងក្រោម៖
+គណនី Supabase របស់អ្នកបានភ្ជាប់ Key រួចរាល់ក្នុងកូដ (`assets/js/cloud-config.js`) ហើយ! នៅសល់តែជំហានចុងក្រោយមួយគត់ គឺបង្កើតតារាង Database៖
 
-1. ចូលទៅ [supabase.com](https://supabase.com) → ចុច **Start your project** → ចូលគណនី (ប្រើ GitHub ឬ Google) → ចុច **New Project** ដាក់ឈ្មោះ (ឧ. `sastra-sleuk-rith`) រួចចុច **Create new project**។
-2. ពេល Project បង្កើតរួច ចុចលើ **SQL Editor** នៅម៉ឺនុយខាងឆ្វេង → ចុច **New query**។
-3. បើកឯកសារ `supabase-setup.sql` ក្នុងថតនេះ → ចម្លងកូដទាំងអស់ទៅបិទភ្ជាប់ក្នុង SQL Editor → ចុច **Run** (ត្រូវឃើញពាក្យ *Success*)។
-4. ចូលទៅ **Project Settings** (រូបស្ពឺខាងក្រោមឆ្វេង) → **API** ហើយចម្លងតម្លៃ ២ នេះ៖
-   - **Project URL** (ឧ. `https://abcdefgh.supabase.co`)
-   - **anon public** key
-5. បើកឯកសារ `assets/js/cloud-config.js` រួចបំពេញតម្លៃទាំង ២ នោះចូល៖
-   ```js
-   app.CloudConfig = {
-     url: 'https://xxxxxxxx.supabase.co',
-     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6...',
-     bucket: 'sastra-media',
-     table: 'media_items',
-   };
-   ```
-6. រក្សាទុក (Save) ឯកសារ — ជាការស្រេច! ឥឡូវវេបសាយនឹងបង្ហាញសញ្ញា `☁ ភ្ជាប់ Cloud រួចរាល់ — អ្នកទាំងអស់គ្នាមើលឃើញរួមគ្នា`។
+1. ចុចបើកតំណនេះផ្ទាល់៖ [បើក Supabase SQL Editor សម្រាប់គម្រោងរបស់អ្នក](https://supabase.com/dashboard/project/lktvuvgwciwltjixbmxt/sql/new)
+2. ចម្លងកូដទាំងអស់ពីឯកសារ `supabase-setup.sql` (ឬចុចប៊ូតុង **«ចម្លងកូដ SQL»** លើវេបសាយ)
+3. បិទភ្ជាប់ (Paste) កូដចូលក្នុងផ្ទាំង SQL Editor នោះ
+4. ចុចប៊ូតុង **Run** (ពណ៌បៃតង ឬចុច `Ctrl + Enter`)
+5. ពេលឃើញពាក្យ **Success. No rows returned** នោះមានន័យថារួចរាល់ ១០០% ហើយ!
+
+ឥឡូវនេះ អ្នកណាក៏ដោយដែលបញ្ចូលរូបភាព ឬ Folder លើវេបសាយរបស់អ្នក នឹងត្រូវបានផ្ទុកលើ Cloud ដោយស្វ័យប្រវត្តិ ហើយអ្នកដទៃទាំងអស់នឹងមើលឃើញរួមគ្នាភ្លាមៗ!
 
 ---
 
-## ផ្នែកទី ២៖ បង្ហោះវេបសាយលើ GitHub Pages (ឥតគិតថ្លៃ • មិនបាច់ដំឡើង Git)
+## ផ្នែកទី ២៖ បង្ហោះឡើង GitHub Pages ឡើងវិញ (Update Code)
 
-1. ចូលទៅ [github.com](https://github.com) រួចចុចសញ្ញា **+** នៅជ្រុងខាងស្តាំលើ → **New repository**។
-2. ដាក់ឈ្មោះ Repository (ឧ. `sastra-sleuk-rith`) → ជ្រើសរើស **Public** → ចុច **Create repository**។
-3. នៅទំព័រ Repository ថ្មី ចុចតំណ **uploading an existing file**។
-4. អូសឯកសារ និងថតទាំងអស់ក្នុងថត `codetest` (`index.html`, `assets/`, `.nojekyll`, `README.md`, `DEPLOY_GUIDE.md`) ទម្លាក់ចូលទៅក្នុង GitHub → ចុច **Commit changes**។
-5. ចូលទៅ **Settings** → **Pages** (នៅម៉ឺនុយខាងឆ្វេង)។
-6. ត្រង់ **Build and deployment → Branch** ជ្រើសរើស `main` និង `/ (root)` → ចុច **Save**។
-7. រង់ចាំប្រហែល ១–២ នាទី រួច Refresh ទំព័រ Settings → Pages អ្នកនឹងឃើញ Link វេបសាយរបស់អ្នកដូចជា៖
-   `https://<ឈ្មោះគណនីGitHubរបស់អ្នក>.github.io/sastra-sleuk-rith/`
+ដើម្បីឲ្យកូដដែលបានកែសម្រួលថ្មីនេះដំណើរការលើវេបសាយ GitHub Pages៖
 
-អ្នកអាចផ្ញើ Link នោះបើកមើលបានទាំងលើ **កុំព្យូទ័រ** និង **ទូរស័ព្ទដៃ** គ្រប់ទីកន្លែង!
+1. ចូលទៅកាន់ Repository របស់អ្នកលើ GitHub (ឧទាហរណ៍៖ `https://github.com/<username>/<repo-name>`)
+2. ចុចលើប៊ូតុង **Add file** -> ជ្រើសរើស **Upload files**
+3. អូសឯកសារ និង Folders ទាំងអស់ពីម៉ាស៊ីនកុំព្យូទ័ររបស់អ្នក (`index.html`, `assets/`, `supabase-setup.sql`, `.nojekyll`, `DEPLOY_GUIDE.md`) ទម្លាក់ចូល
+4. ចុចប៊ូតុង **Commit changes** (ពណ៌បៃតង)
+5. រង់ចាំប្រហែល ១ នាទី រួចចូលទៅមើល Link វេបសាយរបស់អ្នក៖
+   `https://<username>.github.io/<repo-name>/`
 
+---
+
+## លក្ខណៈពិសេសដែលបានបន្ថែមថ្មី៖
+- **Local-First & Zero Data Loss**: បើទោះបីជា Supabase មិនទាន់ Run កូដ ឬបាត់អ៊ីនធឺណិត ក៏រូបភាព និង Folder ដែល User បញ្ចូលនៅតែរក្សាទុកក្នុង IndexedDB និងបង្ហាញលើអេក្រង់ជានិច្ច មិនបាត់បង់ពេល Refresh ឡើយ។
+- **Smart Cloud Sync**: ពេលដែល Supabase Run កូដរួចរាល់ វានឹងក្លាយជា Cloud ១០០% សម្រាប់អ្នកទាំងអស់គ្នាមើលឃើញរួមគ្នា។
+- **ប៊ូតុងចម្លងកូដ SQL លើវេបសាយផ្ទាល់**: អាចចុចចម្លងកូដ និងចុចបើក Supabase SQL Editor ដោយផ្ទាល់ពីផ្នែក Upload លើវេបសាយ។

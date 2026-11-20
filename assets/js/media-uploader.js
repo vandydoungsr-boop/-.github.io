@@ -419,12 +419,15 @@
     if (deleteBtn) {
       deleteBtn.addEventListener('click', async () => {
         if (!activeFolderId) return;
+        const deletingFolder = allFolders.find((f) => f.id === activeFolderId);
         const deletingId = activeFolderId;
         closeFolderModal();
         allFolders = allFolders.filter((f) => f.id !== deletingId);
         updateCounters();
         renderGallery(true);
-        app.Storage.deleteFolder(deletingId);
+        app.Storage.deleteFolder(deletingId, deletingFolder ? deletingFolder.items : []).catch(
+          console.warn
+        );
         showToast('បានលុបថតឯកសារសាស្រ្តាដោយជោគជ័យ');
       });
     }
@@ -433,6 +436,7 @@
       addMoreBtn.addEventListener('click', () => addMoreInput.click());
       addMoreInput.addEventListener('change', async () => {
         if (!activeFolderId || !addMoreInput.files || !addMoreInput.files.length) return;
+        const currentFolder = allFolders.find((f) => f.id === activeFolderId);
         const validFiles = naturalSortFiles(Array.from(addMoreInput.files)).filter((f) =>
           Boolean(detectMediaType(f))
         );
@@ -447,7 +451,11 @@
           blob: file,
         }));
 
-        const updatedFolder = await app.Storage.appendFilesToFolder(activeFolderId, newEntries);
+        const updatedFolder = await app.Storage.appendFilesToFolder(
+          activeFolderId,
+          newEntries,
+          currentFolder
+        );
         addMoreInput.value = '';
         if (updatedFolder) {
           allFolders = allFolders.map((f) => (f.id === updatedFolder.id ? updatedFolder : f));
@@ -674,12 +682,132 @@
     const form = document.getElementById('media-upload-form');
     const modePill = document.getElementById('storage-mode-pill');
     const coverStyleGroup = document.getElementById('cover-style-group');
+    const cloudHelperCard = document.getElementById('cloud-helper-card');
+    const copySqlBtn = document.getElementById('copy-sql-setup-btn');
 
-    if (modePill && app.Storage && app.Storage.isCloudEnabled) {
-      const isCloud = app.Storage.isCloudEnabled();
-      modePill.textContent = isCloud
-        ? '⚡ បង្ហាញភ្លាមៗ • ភ្ជាប់ Cloud រួចរាល់'
-        : '⚡ បង្ហាញភ្លាមៗ មិនចាំបាច់អង្គុយចាំ (គាំទ្រ File & Folder)';
+    const SUPABASE_SETUP_SQL = `-- ១. តារាងផ្ទុករូបភាព និងវីឌីអូទោល
+create table if not exists public.media_items (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  category text not null default 'សាស្រ្តាបុរាណ',
+  author text not null default 'អ្នកចូលរួមថែរក្សាមរតក',
+  description text default '',
+  type text not null check (type in ('image', 'video')),
+  media_url text not null,
+  storage_path text not null,
+  delete_token text not null,
+  created_at timestamptz not null default now()
+);
+
+alter table public.media_items enable row level security;
+
+drop policy if exists "Public can read media_items" on public.media_items;
+create policy "Public can read media_items" on public.media_items for select to public using (true);
+
+drop policy if exists "Public can insert media_items" on public.media_items;
+create policy "Public can insert media_items" on public.media_items for insert to public with check (true);
+
+drop policy if exists "Public can delete media_items" on public.media_items;
+create policy "Public can delete media_items" on public.media_items for delete to public using (true);
+
+-- ២. តារាងផ្ទុកថតសាស្រ្តាស្លឹករឹត
+create table if not exists public.media_folders (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  category text not null default 'សាស្រ្តាបុរាណ',
+  author text not null default 'អ្នកចូលរួមថែរក្សាមរតក',
+  description text default '',
+  cover_style text not null default 'plank',
+  items jsonb not null default '[]'::jsonb,
+  delete_token text not null,
+  created_at timestamptz not null default now()
+);
+
+alter table public.media_folders enable row level security;
+
+drop policy if exists "Public can read media_folders" on public.media_folders;
+create policy "Public can read media_folders" on public.media_folders for select to public using (true);
+
+drop policy if exists "Public can insert media_folders" on public.media_folders;
+create policy "Public can insert media_folders" on public.media_folders for insert to public with check (true);
+
+drop policy if exists "Public can update media_folders" on public.media_folders;
+create policy "Public can update media_folders" on public.media_folders for update to public using (true) with check (true);
+
+drop policy if exists "Public can delete media_folders" on public.media_folders;
+create policy "Public can delete media_folders" on public.media_folders for delete to public using (true);
+
+-- ៣. បង្កើត Storage Bucket ឈ្មោះ sastra-media
+insert into storage.buckets (id, name, public) values ('sastra-media', 'sastra-media', true) on conflict (id) do update set public = true;
+
+drop policy if exists "Public read sastra-media" on storage.objects;
+create policy "Public read sastra-media" on storage.objects for select to public using (bucket_id = 'sastra-media');
+
+drop policy if exists "Public upload sastra-media" on storage.objects;
+create policy "Public upload sastra-media" on storage.objects for insert to public with check (bucket_id = 'sastra-media');
+
+drop policy if exists "Public update sastra-media" on storage.objects;
+create policy "Public update sastra-media" on storage.objects for update to public using (bucket_id = 'sastra-media');
+
+drop policy if exists "Public delete sastra-media" on storage.objects;
+create policy "Public delete sastra-media" on storage.objects for delete to public using (bucket_id = 'sastra-media');`;
+
+    async function updateCloudStatusUI() {
+      if (!modePill || !app.Storage || !app.Storage.checkCloudStatus) return;
+      const status = await app.Storage.checkCloudStatus();
+      if (status.state === 'connected') {
+        modePill.className = 'storage-mode-pill is-connected';
+        modePill.textContent = '☁ ភ្ជាប់ Cloud រួចរាល់ — អ្នកគ្រប់គ្នាមើលឃើញរួមគ្នា';
+        if (cloudHelperCard) cloudHelperCard.hidden = true;
+      } else if (status.state === 'tables_missing') {
+        modePill.className = 'storage-mode-pill is-warning';
+        modePill.textContent = '⚠️ មិនទាន់ Run កូដក្នុង Supabase (សូមចុចទីនេះ)';
+        if (cloudHelperCard) cloudHelperCard.hidden = false;
+      } else if (status.state === 'offline') {
+        modePill.className = 'storage-mode-pill is-offline';
+        modePill.textContent = '● Offline — រក្សាទុកក្នុងឧបករណ៍ផ្ទាល់';
+        if (cloudHelperCard) cloudHelperCard.hidden = true;
+      } else {
+        modePill.className = 'storage-mode-pill';
+        modePill.textContent = '● ផ្ទុកក្នុងឧបករណ៍ផ្ទាល់ (IndexedDB)';
+        if (cloudHelperCard) cloudHelperCard.hidden = true;
+      }
+    }
+
+    updateCloudStatusUI();
+
+    if (modePill) {
+      modePill.addEventListener('click', () => {
+        if (cloudHelperCard) {
+          cloudHelperCard.hidden = !cloudHelperCard.hidden;
+        }
+      });
+    }
+
+    if (copySqlBtn) {
+      copySqlBtn.addEventListener('click', async () => {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(SUPABASE_SETUP_SQL);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = SUPABASE_SETUP_SQL;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          copySqlBtn.textContent = '✓ បានចម្លងកូដ SQL រួចរាល់!';
+          showToast('📋 បានចម្លងកូដ SQL! សូមយកទៅ Paste ក្នុង Supabase SQL Editor រួចចុច Run');
+          setTimeout(() => {
+            copySqlBtn.textContent = '📋 ចម្លងកូដ SQL (Copy)';
+          }, 3500);
+        } catch {
+          showToast('សូមបើកឯកសារ supabase-setup.sql ក្នុងកូដដើម្បីចម្លង');
+        }
+      });
     }
 
     if (!dropzone || !fileInput || !form) return;
@@ -883,9 +1011,23 @@
         updateCounters();
         renderGallery(true);
 
-        // រក្សាទុកក្នុង IndexedDB ក្នុងផ្ទៃខាងក្រោយដោយមិនឲ្យអាក់ UI ឡើយ
-        app.Storage.persistFolderBackground(folderRecord);
-        showToast(`⚡ បានបញ្ចូលថត «${title}» (${filesToPublish.length} ឯកសារ) រួចរាល់ភ្លាមៗ!`);
+        // រក្សាទុកក្នុង Cloud ឬ IndexedDB ក្នុងផ្ទៃខាងក្រោយដោយមិនឲ្យអាក់ UI ឡើយ
+        app.Storage.persistFolderBackground(folderRecord)
+          .then(() => {
+            if (app.Storage.isCloudEnabled()) {
+              refreshAll(true);
+              showToast(`☁ បានបង្ហោះថត «${title}» ឡើង Cloud រួចរាល់! អ្នកគ្រប់គ្នាអាចមើលឃើញបានហើយ`);
+            }
+          })
+          .catch((err) => {
+            console.warn('Folder cloud upload warning (saved locally in IndexedDB):', err);
+            showToast('⚡ បានរក្សាទុកក្នុងឧបករណ៍ផ្ទាល់ខ្លួនរួចរាល់! (សូម Run កូដក្នុង Supabase ដើម្បីឲ្យអ្នកដទៃមើលឃើញ)');
+          });
+        showToast(
+          app.Storage.isCloudEnabled()
+            ? `⚡ បានបង្ហាញថត «${title}» ភ្លាមៗ • កំពុងរក្សាទុក...`
+            : `⚡ បានបញ្ចូលថត «${title}» (${filesToPublish.length} ឯកសារ) រួចរាល់ភ្លាមៗ!`
+        );
       } else {
         // បង្កើតឯកសារទោល ហើយបង្ហាញភ្លាមៗ!
         const file = filesToPublish[0];
@@ -911,10 +1053,22 @@
         renderGallery(true);
 
         // រក្សាទុកក្នុងផ្ទៃខាងក្រោយ (IndexedDB / Supabase Cloud)
-        app.Storage.persistSingleBackground(singleRecord).catch((err) => {
-          console.warn('Background persist error:', err);
-        });
-        showToast('⚡ បានបញ្ចូលរូបភាព/វីឌីអូ និងបង្ហាញភ្លាមៗ!');
+        app.Storage.persistSingleBackground(singleRecord)
+          .then(() => {
+            if (app.Storage.isCloudEnabled()) {
+              refreshAll(true);
+              showToast('☁ បានបង្ហោះឡើង Cloud រួចរាល់! អ្នកគ្រប់គ្នាអាចមើលឃើញបានហើយ');
+            }
+          })
+          .catch((err) => {
+            console.warn('Single cloud upload warning (saved locally in IndexedDB):', err);
+            showToast('⚡ បានរក្សាទុកក្នុងឧបករណ៍ផ្ទាល់ខ្លួនរួចរាល់! (សូម Run កូដក្នុង Supabase ដើម្បីឲ្យអ្នកដទៃមើលឃើញ)');
+          });
+        showToast(
+          app.Storage.isCloudEnabled()
+            ? '⚡ បានបង្ហាញភ្លាមៗ • កំពុងរក្សាទុក...'
+            : '⚡ បានបញ្ចូលរូបភាព/វីឌីអូ និងបង្ហាញភ្លាមៗ!'
+        );
       }
 
       form.reset();

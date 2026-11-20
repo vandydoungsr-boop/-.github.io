@@ -12,15 +12,16 @@
   'use strict';
 
   app.CloudConfig = {
-    // ដាក់ Project URL ពី Supabase -> Project Settings -> API (ឧ. "https://xxxxx.supabase.co")
-    url: '',
+    // Project URL របស់អ្នក (បានបំពេញរួចរាល់!)
+    url: 'https://lktvuvgwciwltjixbmxt.supabase.co',
 
-    // ដាក់ anon public key ពី Supabase -> Project Settings -> API
-    anonKey: '',
+    // Publishable Key (សុវត្ថិភាពសម្រាប់ប្រើលើ Frontend / GitHub Pages)
+    anonKey: 'sb_publishable_D8nzigTvcBQzhPuLF4upBg_9bNTU6qi',
 
     // ឈ្មោះ Storage Bucket និងតារាង Database (ត្រូវគ្នានឹងឯកសារ supabase-setup.sql)
     bucket: 'sastra-media',
     table: 'media_items',
+    foldersTable: 'media_folders',
   };
 })((window.SastraApp = window.SastraApp || {}));
 
